@@ -1,0 +1,38 @@
+---
+description: Design system and visual language guidance
+globs:
+  - "app/**/*"
+  - "components/**/*"
+  - "lib/design/**/*"
+---
+
+This site should feel:
+- nocturnal
+- warm
+- literary
+- intelligent
+- slightly cyber, but restrained
+
+Visual rules:
+- Prioritize typography, spacing, rhythm, and silhouette before decoration.
+- Prefer strong layout and clean hierarchy over ornament.
+- Use generous whitespace.
+- Use rounded corners consistently.
+- Use shadows softly and sparingly.
+- Motion should be subtle and purposeful.
+- Color should support mood, not dominate the page.
+
+Avoid:
+- toy-like UI
+- dashboard-like density
+- random accent colors
+- inconsistent spacing scales
+- mismatched border radii
+- excessive badges/chips/buttons
+- hero sections that feel like startup landing pages
+
+Component discipline:
+- maximum of 2 core card families per section
+- one canonical button style family
+- one canonical section-heading pattern
+- prose styling must remain calmer than marketing sections

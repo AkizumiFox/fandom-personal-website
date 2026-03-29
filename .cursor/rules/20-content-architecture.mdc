@@ -1,0 +1,28 @@
+---
+description: Shared information architecture guidance
+globs:
+  - "app/**/*"
+  - "content/**/*"
+  - "lib/content/**/*"
+---
+
+The homepage should act as a gateway to three worlds:
+- writing
+- research
+- fandom
+
+Architecture rules:
+- present a unified identity first
+- do not split the homepage into three unrelated mini-sites
+- each section should feel like a facet of the same person
+- every page should have a clear primary action or next step
+- list pages should support scanning
+- detail pages should support immersion
+
+When building a page, decide whether it is:
+- list-first
+- reading-first
+- gallery-first
+- evidence-first
+
+Then optimize layout accordingly.

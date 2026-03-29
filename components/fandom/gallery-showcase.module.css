@@ -1,0 +1,114 @@
+.showcaseRoot {
+  position: relative;
+  margin-top: 0.75rem;
+}
+
+.viewport {
+  overflow: hidden;
+  border-radius: 0;
+  border-top: 1px solid var(--surface-border);
+  border-bottom: 1px solid var(--surface-border);
+  background: color-mix(in oklab, var(--surface-2) 96%, white 4%);
+  box-shadow: 0 10px 22px var(--surface-shadow);
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.viewport[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.track {
+  display: flex;
+  gap: 0;
+  padding: 0.7rem 0;
+  will-change: transform;
+}
+
+.slide {
+  position: relative;
+  width: clamp(190px, 24vw, 320px);
+  height: clamp(140px, 18vw, 220px);
+  flex: 0 0 auto;
+  border-radius: 0;
+  overflow: hidden;
+  border: 0;
+  background:
+    radial-gradient(circle at 20% 15%, color-mix(in oklab, var(--accent-soft) 20%, transparent), transparent 42%),
+    color-mix(in oklab, var(--hero-panel-bg) 94%, white 6%);
+  transition: background var(--motion-fast) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide + .slide {
+  border-left: 1px solid var(--surface-border);
+}
+
+.imageButton {
+  all: unset;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.imageWrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0.55rem;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  filter: saturate(0.98) contrast(1.02);
+  transition:
+    transform var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1),
+    filter var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.slide:hover .image {
+  transform: scale(1.012);
+  filter: saturate(1.03) contrast(1.03);
+}
+
+.slide:hover {
+  background:
+    radial-gradient(circle at 20% 15%, color-mix(in oklab, var(--accent-soft) 26%, transparent), transparent 42%),
+    color-mix(in oklab, var(--surface-2) 92%, white 8%);
+}
+
+.overlay {
+  position: absolute;
+  left: 0.8rem;
+  top: 0.8rem;
+}
+
+.category {
+  display: inline-block;
+  font-size: 0.68rem;
+  line-height: 1;
+  padding: 0.28rem 0.48rem;
+  border-radius: 999px;
+  border: 1px solid var(--surface-border);
+  background: color-mix(in oklab, var(--surface-2) 72%, white 28%);
+  color: var(--foreground);
+}
+
+.title {
+  display: none;
+}
+
+.desc {
+  display: none;
+}
+

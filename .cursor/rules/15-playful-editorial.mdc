@@ -1,0 +1,28 @@
+---
+description: Playful editorial visual system constraints
+globs:
+  - "app/**/*"
+  - "components/**/*"
+---
+
+Visual direction:
+- Keep a calm editorial base, then add playful detail through motion and hierarchy.
+- Avoid toy-like UI and avoid loud gradients unless explicitly requested.
+- Reuse shared surface/chip/card patterns before creating new visual variants.
+
+System rules:
+- Use one coherent surface family (`surface-1/2/3` + shared border/shadow logic).
+- Use one coherent chip/pill family for nav, tags, and filters.
+- Keep radius consistent (panel > card > chip).
+- Favor subtle hover motion (`translateY` small distances, soft shadow changes).
+- Keep reading pages calmer than homepage/gallery pages.
+- Keep homepage and fandom as highest-expression areas, but still in the same token system.
+
+Typography and spacing:
+- Preserve strong heading hierarchy and readable body line length.
+- Prefer generous section spacing and avoid dense stacking.
+- Use muted text for metadata; do not lower contrast too far.
+
+Implementation preference:
+- Prefer semantic CSS variables and shared utility classes over ad-hoc one-off values.
+- Before adding a new style treatment, check if it can map to existing system classes.

@@ -1,0 +1,43 @@
+---
+description: Global repo conventions for the personal site
+globs:
+  - "**/*"
+---
+
+You are working in a personal website codebase built for three content modes:
+1. literary writing
+2. research/project documentation
+3. furry fandom/gallery/profile pages
+
+Global priorities, in order:
+1. readability
+2. visual coherence
+3. maintainability
+4. tasteful motion
+5. performance
+
+General requirements:
+- Use TypeScript strictly for JS/TS code.
+- Prefer server components by default unless interactivity is required.
+- Prefer composition over large monolithic components.
+- Reuse existing components before creating new ones.
+- Keep page files thin; move repeated logic into components or lib.
+- Avoid introducing new visual patterns unless they are clearly justified.
+- Do not add a new card style when an existing one can be adapted.
+- Do not add strong gradients, glassmorphism, or heavy blur unless explicitly asked.
+- Avoid overdecorated UI.
+- Mobile layout must be considered from the start, not patched later.
+- Favor accessible semantics and keyboard-safe interactions.
+- Prefer shared visual tokens and common surface/chip patterns over one-off styles.
+
+Before major implementation:
+- inspect the existing design tokens
+- inspect related page components
+- explain whether the page belongs to writing, research, fandom, or shared marketing
+- preserve one coherent visual language across sections
+
+Output expectations:
+- explain the visual intent briefly before coding
+- list files to modify
+- keep diffs scoped
+- after edits, run lint/typecheck/build if available

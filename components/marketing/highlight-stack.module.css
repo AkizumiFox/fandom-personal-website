@@ -1,0 +1,90 @@
+.stackRoot {
+  position: relative;
+}
+
+.stackFrame {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.cardWrap {
+  width: 100%;
+  transform-origin: center;
+}
+
+.cardWrap:nth-child(1) {
+  transform: translateX(4px) rotate(-2deg);
+}
+
+.cardWrap:nth-child(2) {
+  transform: translateX(-3px) rotate(1.7deg);
+}
+
+.cardWrap:nth-child(3) {
+  transform: translateX(5px) rotate(-1.5deg);
+}
+
+.highlightCard {
+  backdrop-filter: blur(2px);
+  animation: card-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  border-color: var(--hero-card-border);
+  background: var(--hero-card-bg);
+  box-shadow: 0 10px 24px var(--hero-card-shadow);
+  transition:
+    transform var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.highlightCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px var(--hero-card-shadow-hover);
+}
+
+.miniPreview {
+  margin-bottom: 0.6rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--preview-border);
+  height: 78px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.miniPreview0 {
+  background:
+    radial-gradient(circle at 16% 20%, var(--preview-0-glow), transparent 34%),
+    linear-gradient(135deg, var(--preview-0-start) 0%, var(--preview-0-mid) 60%, var(--preview-0-end) 100%);
+}
+
+.miniPreview1 {
+  background:
+    radial-gradient(circle at 82% 20%, var(--preview-1-glow), transparent 36%),
+    linear-gradient(140deg, var(--preview-1-start) 0%, var(--preview-1-mid) 55%, var(--preview-1-end) 100%);
+}
+
+.miniPreview2 {
+  background:
+    radial-gradient(circle at 20% 70%, var(--preview-2-glow), transparent 34%),
+    linear-gradient(130deg, var(--preview-2-start) 0%, var(--preview-2-mid) 55%, var(--preview-2-end) 100%);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .miniPreview {
+    height: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlightCard {
+    animation: none !important;
+  }
+}

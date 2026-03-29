@@ -1,0 +1,27 @@
+---
+description: Research page conventions
+globs:
+  - "app/research/**/*"
+  - "components/research/**/*"
+  - "content/research/**/*"
+---
+
+Research pages should feel credible and clean.
+
+Requirements:
+- provide a strong top summary
+- make key contributions immediately visible
+- separate abstract, methods, results, and links clearly
+- support figures, tables, and code links gracefully
+- use evidence-first hierarchy
+- do not use marketing tone
+- do not overanimate plots or metric displays
+
+Preferred structure:
+1. title + short metadata
+2. abstract or short summary
+3. key contributions
+4. links to paper/code/slides/poster
+5. figures/results
+6. implementation notes or writeup
+7. related work or next steps

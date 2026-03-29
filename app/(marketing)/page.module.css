@@ -1,0 +1,65 @@
+.heroShell {
+  animation: hero-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.heroOrb {
+  animation: orb-drift 8.4s ease-in-out infinite;
+}
+
+.heroOrbDelay {
+  animation-delay: -3s;
+}
+
+.characterWrap {
+  animation: float-y 5.6s ease-in-out infinite;
+}
+
+.rightStack {
+  display: grid;
+  gap: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .rightStack {
+    transform: translateY(-24px);
+  }
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8px, -6px, 0) scale(1.04);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroShell,
+  .heroOrb,
+  .characterWrap {
+    animation: none !important;
+  }
+}

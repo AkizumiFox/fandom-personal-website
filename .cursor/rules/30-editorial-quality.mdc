@@ -1,0 +1,30 @@
+---
+description: Longform writing and essay page quality rules
+globs:
+  - "app/writing/**/*"
+  - "components/typography/**/*"
+  - "content/writing/**/*"
+---
+
+Writing pages are not blog dashboards.
+
+Requirements:
+- optimize line length and line height for long reading sessions
+- headings should be elegant, not loud
+- links should be visible but not gaudy
+- pull quotes should feel literary, not promotional
+- use calm rhythm between sections
+- avoid excessive UI chrome around prose
+- avoid stuffing metadata above the fold
+
+Good additions:
+- reading progress
+- estimated reading time
+- section anchors when text is long
+- footnotes or sidenotes when useful
+
+Avoid:
+- card-heavy composition inside article pages
+- excessive separators
+- busy sticky sidebars
+- animations that compete with reading

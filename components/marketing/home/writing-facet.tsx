@@ -1,0 +1,33 @@
+import Link from "next/link";
+import type { WritingEntry } from "@/lib/content/writing";
+
+type WritingFacetProps = {
+  writings: readonly WritingEntry[];
+};
+
+export function WritingFacet({ writings }: WritingFacetProps) {
+  return (
+    <section id="article-facet" className="surface-panel scroll-mt-24 mt-6 rounded-panel p-6">
+      <h2 className="mt-1 text-2xl font-semibold">
+        <Link href="/writing" className="transition hover:text-accent">
+          文章雜談
+        </Link>
+      </h2>
+      <div className="mt-4 grid gap-3 md:grid-cols-2">
+        {writings.slice(0, 4).map((entry) => (
+          <Link key={entry.slug} href={`/writing/${entry.slug}`} className="surface-card rounded-xl p-4 hover:-translate-y-[2px]">
+            <p className="font-medium text-foreground">{entry.title}</p>
+            <p className="mt-1 text-sm text-muted">{entry.excerpt ?? "更新中"}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {entry.tags.map((tag) => (
+                <span key={tag} className="ui-chip px-2 py-0.5 text-xs">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
