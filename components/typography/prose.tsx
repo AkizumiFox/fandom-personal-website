@@ -9,7 +9,7 @@ export function Prose({ className, children }: ProseProps) {
   return (
     <article
       className={cn(
-        "mx-auto max-w-prose py-8 text-[1.03rem] leading-8 text-foreground/95 md:py-10",
+        "font-serif-prose mx-auto max-w-prose py-8 text-[1.05rem] leading-9 text-foreground/95 md:py-10",
         "[&_h1]:mt-2 [&_h1]:text-3xl [&_h1]:font-semibold [&_h1]:leading-tight",
         "[&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:leading-tight",
         "[&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold",

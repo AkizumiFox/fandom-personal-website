@@ -8,7 +8,8 @@ type SocialFacetProps = {
 export function SocialFacet({ socialLinks }: SocialFacetProps) {
   return (
     <article id="social-facet" className="surface-panel scroll-mt-24 rounded-panel p-6">
-      <h2 className="mt-1 text-2xl font-semibold">
+      <p className="section-kicker">CONNECT</p>
+      <h2 className="mt-2 text-2xl font-semibold">
         <Link href="/social" className="transition hover:text-accent">
           社群媒體
         </Link>

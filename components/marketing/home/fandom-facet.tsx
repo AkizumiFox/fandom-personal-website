@@ -27,7 +27,8 @@ export function FandomFacet({ fandomSelections, fandomItems }: FandomFacetProps)
 
   return (
     <article id="fandom-facet" className="surface-panel scroll-mt-24 rounded-panel p-6">
-      <h2 className="mt-1 text-2xl font-semibold">
+      <p className="section-kicker">GALLERY</p>
+      <h2 className="mt-2 text-2xl font-semibold">
         <Link href="/fandom/gallery" className="transition hover:text-accent">
           獸設 / 獸圖 / 毛裝
         </Link>
@@ -44,7 +45,7 @@ export function FandomFacet({ fandomSelections, fandomItems }: FandomFacetProps)
         ))}
       </div>
       {featuredItem ? (
-        <div className="surface-card mt-4 overflow-hidden rounded-xl hover:-translate-y-[2px]">
+        <div className="surface-card mt-4 overflow-hidden rounded-xl">
           <button
             type="button"
             onClick={() => router.push(`/fandom/gallery?category=${featuredItem.category}`)}

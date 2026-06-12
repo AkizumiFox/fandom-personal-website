@@ -9,7 +9,7 @@ type WritingCardProps = {
 
 export function WritingCard({ title, excerpt, href, tags = [] }: WritingCardProps) {
   return (
-    <Link href={href} className="surface-card block rounded-card p-6 hover:-translate-y-[1px]">
+    <Link href={href} className="surface-card block rounded-card p-6">
       <h3 className="text-xl font-medium text-foreground">{title}</h3>
       <p className="mt-2 text-sm leading-7 text-muted">{excerpt}</p>
       {tags.length > 0 ? (

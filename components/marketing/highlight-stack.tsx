@@ -24,11 +24,13 @@ export function HighlightStack({ items }: HighlightStackProps) {
             <div key={item.id} className={styles.cardWrap}>
               <Link
                 href={item.href}
-                className={`${styles.highlightCard} group block rounded-card border p-3 transition`}
+                className={`${styles.highlightCard} group flex items-center gap-3 rounded-card border p-3 transition`}
               >
                 <div className={`${styles.miniPreview} ${toneClass}`} />
-                <p className="text-base font-semibold text-[var(--hero-card-title)] group-hover:text-[var(--foreground)]">{item.title}</p>
-                <p className="mt-1 text-sm text-[var(--hero-card-note)]">{item.note}</p>
+                <div className="min-w-0">
+                  <p className="text-base font-semibold text-[var(--hero-card-title)] group-hover:text-[var(--foreground)]">{item.title}</p>
+                  <p className="mt-0.5 text-sm text-[var(--hero-card-note)]">{item.note}</p>
+                </div>
               </Link>
             </div>
           );

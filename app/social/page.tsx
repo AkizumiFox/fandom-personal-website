@@ -8,13 +8,13 @@ export default function SocialPage() {
 
   return (
     <SectionShell>
-      <SectionHeading title="社群媒體" description="每個平台都可以私訊我，最常出沒在 X、Facebook、Instagram 與 Threads。" />
+      <SectionHeading eyebrow="Connect" title="社群媒體" description="每個平台都可以私訊我，最常出沒在 X、Facebook、Instagram 與 Threads。" />
       <div className="grid gap-3 md:grid-cols-2">
         {socialLinks.map((link) => (
           <Link
             key={link.label}
             href={link.href}
-            className="surface-card rounded-card p-5 hover:-translate-y-[1px]"
+            className="surface-card rounded-card p-5"
           >
             <span className="ui-chip text-xs">社群</span>
             <h3 className="mt-3 text-xl font-semibold text-foreground">{link.label}</h3>

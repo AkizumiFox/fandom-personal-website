@@ -9,6 +9,23 @@ type GalleryGridProps = {
   items: readonly FandomItem[];
 };
 
+function GalleryImage({ item }: { item: FandomItem }) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <span className={`block ${loaded ? "" : "skeleton aspect-square"}`}>
+      <Image
+        src={item.image}
+        alt={item.title || "fandom image"}
+        width={1200}
+        height={1200}
+        onLoad={() => setLoaded(true)}
+        className={`block h-auto w-full transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
+      />
+    </span>
+  );
+}
+
 export function GalleryGrid({ items }: GalleryGridProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeItem = useMemo(
@@ -42,13 +59,7 @@ export function GalleryGrid({ items }: GalleryGridProps) {
               className="block w-full overflow-hidden rounded-xl border border-[var(--surface-border)] bg-[var(--surface-2)]"
               aria-label={`開啟圖片 ${item.title || item.id}`}
             >
-              <Image
-                src={item.image}
-                alt={item.title || "fandom image"}
-                width={1200}
-                height={1200}
-                className="block h-auto w-full"
-              />
+              <GalleryImage item={item} />
             </button>
             <p className="mt-3 text-xs text-muted">{fandomCategoryLabels[item.category]}</p>
             {item.title || item.author ? (

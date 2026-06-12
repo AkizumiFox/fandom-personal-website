@@ -8,7 +8,7 @@ export default function WritingListPage() {
 
   return (
     <SectionShell>
-      <SectionHeading title="文章雜談" description="近期筆記、散文與主題文章。保留清楚層級，也留一點玩心。" />
+      <SectionHeading eyebrow="Notes" title="文章雜談" description="近況、筆記，和一些想記下來的事。" />
       <div className="grid gap-4 md:grid-cols-2">
         {entries.map((entry) => (
           <WritingCard

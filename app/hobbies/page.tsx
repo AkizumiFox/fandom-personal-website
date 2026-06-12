@@ -7,7 +7,7 @@ export default function HobbiesPage() {
 
   return (
     <SectionShell>
-      <SectionHeading title="生活興趣" description="不只是清單，這些是我會反覆回去的日常熱愛。" />
+      <SectionHeading eyebrow="Life" title="生活興趣" description="平常喜歡做的事。" />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {hobbyItems.map((item) => (
           <article key={item} className="surface-card rounded-card p-5">

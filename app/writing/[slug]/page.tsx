@@ -36,8 +36,8 @@ export default async function WritingDetailPage({ params }: WritingDetailPagePro
   return (
     <SectionShell>
       <ReadingProgress />
-      <article className="surface-panel mx-auto mt-6 max-w-3xl rounded-panel px-6 pb-8 pt-6 md:px-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{entry.title}</h1>
+      <article className="surface-panel mx-auto mt-6 max-w-4xl rounded-panel px-6 pb-8 pt-6 md:px-10">
+        <h1 className="font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{entry.title}</h1>
         <p className="mt-2 text-sm leading-7 text-muted">{entry.excerpt ?? "更新中"}</p>
         <div className="mt-4 flex flex-wrap gap-2">
           {entry.tags.map((tag) => (
@@ -57,7 +57,7 @@ export default async function WritingDetailPage({ params }: WritingDetailPagePro
           {prevEntry ? (
             <Link
               href={`/writing/${prevEntry.slug}`}
-              className="surface-card block rounded-card p-4 hover:-translate-y-[1px]"
+              className="surface-card block rounded-card p-4"
             >
               <p className="text-xs text-muted">← 前一篇</p>
               <p className="mt-1 line-clamp-1 text-sm font-medium text-foreground">{prevEntry.title}</p>
@@ -69,7 +69,7 @@ export default async function WritingDetailPage({ params }: WritingDetailPagePro
           {nextEntry ? (
             <Link
               href={`/writing/${nextEntry.slug}`}
-              className="surface-card block rounded-card p-4 text-right hover:-translate-y-[1px]"
+              className="surface-card block rounded-card p-4 text-right"
             >
               <p className="text-xs text-muted">後一篇 →</p>
               <p className="mt-1 line-clamp-1 text-sm font-medium text-foreground">{nextEntry.title}</p>

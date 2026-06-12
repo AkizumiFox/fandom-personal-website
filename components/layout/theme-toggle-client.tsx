@@ -52,10 +52,10 @@ export function ThemeToggleClient({ className = "", initialIsDark }: ThemeToggle
     <a
       href="/theme/toggle"
       onClick={handleClick}
-      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition duration-200 ease-out active:scale-95 ${isDark
-        ? "border-[var(--surface-border-strong)] bg-[var(--surface-3)] text-[var(--accent-soft)] shadow-[0_8px_18px_var(--surface-shadow)]"
-        : "border-[var(--surface-border)] bg-[var(--surface-2)] text-[var(--brown)] shadow-[0_8px_18px_var(--surface-shadow)]"
-      } hover:-translate-y-0.5 hover:border-[var(--surface-border-strong)] hover:shadow-[0_12px_22px_var(--surface-shadow-hover)] ${className}`.trim()}
+      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-200 ease-out ${isDark
+        ? "border-[var(--surface-border)] bg-[var(--surface-2)] text-[var(--accent-soft)]"
+        : "border-[var(--surface-border)] bg-[var(--surface-2)] text-[var(--brown)]"
+      } hover:border-[var(--surface-border-strong)] ${className}`.trim()}
       aria-label={isDark ? "切換為淺色模式" : "切換為深色模式"}
       title={isDark ? "切換為淺色模式" : "切換為深色模式"}
     >

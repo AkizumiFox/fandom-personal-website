@@ -30,22 +30,21 @@
   border-color: var(--hero-card-border);
   background: var(--hero-card-bg);
   box-shadow: 0 10px 24px var(--hero-card-shadow);
-  transition:
-    transform var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
+  transition: border-color var(--motion-fast) ease;
 }
 
 .highlightCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px var(--hero-card-shadow-hover);
+  border-color: var(--surface-border-strong);
 }
 
+/* Fixed 16:9 ratio so real images can drop in later without layout shifts. */
 .miniPreview {
-  margin-bottom: 0.6rem;
-  border-radius: 0.9rem;
+  flex-shrink: 0;
+  border-radius: 0.7rem;
   border: 1px solid var(--preview-border);
-  height: 78px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  width: 7.5rem;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
 }
 
 .miniPreview0 {
@@ -74,12 +73,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (max-width: 767px) {
-  .miniPreview {
-    height: 64px;
   }
 }
 

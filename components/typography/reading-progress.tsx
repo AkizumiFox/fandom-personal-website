@@ -19,7 +19,7 @@ export function ReadingProgress() {
   }, []);
 
   return (
-    <div className="sticky top-0 z-20 h-1 w-full bg-white/10">
+    <div className="sticky top-[77px] z-40 h-1 w-full bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] md:top-[85px]">
       <div className="h-full bg-accent transition-[width] duration-150" style={{ width: `${progress}%` }} />
     </div>
   );

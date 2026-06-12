@@ -7,7 +7,8 @@ type HobbiesFacetProps = {
 export function HobbiesFacet({ hobbyItems }: HobbiesFacetProps) {
   return (
     <article id="hobby-facet" className="surface-panel scroll-mt-24 rounded-panel p-6">
-      <h2 className="mt-1 text-2xl font-semibold">
+      <p className="section-kicker">LIFE</p>
+      <h2 className="mt-2 text-2xl font-semibold">
         <Link href="/hobbies" className="transition hover:text-accent">
           生活興趣
         </Link>

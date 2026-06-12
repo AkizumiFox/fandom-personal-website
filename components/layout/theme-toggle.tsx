@@ -9,7 +9,7 @@ type ThemeToggleProps = {
 
 export async function ThemeToggle({ className = "" }: ThemeToggleProps) {
   const cookieStore = await cookies();
-  const isDark = cookieStore.get(STORAGE_KEY)?.value === "autumn-dark";
+  const isDark = cookieStore.get(STORAGE_KEY)?.value !== "autumn-light";
 
   return <ThemeToggleClient className={className} initialIsDark={isDark} />;
 }

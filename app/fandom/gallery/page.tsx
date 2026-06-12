@@ -27,7 +27,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
 
   return (
     <SectionShell>
-      <SectionHeading title="圖庫" />
+      <SectionHeading eyebrow="Gallery" title="圖庫" />
 
       <section className="relative left-1/2 right-1/2 mb-6 w-screen -translate-x-1/2 px-2 md:px-4">
         <div className="flex flex-wrap items-center justify-center gap-2 py-2">

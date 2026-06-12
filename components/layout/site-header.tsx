@@ -1,42 +1,34 @@
 import Link from "next/link";
 import Image from "next/image";
-import { navItems } from "@/content/data/nav";
-import { SectionShell } from "./section-shell";
+import { NavLinks } from "./nav-links";
 import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
   return (
-    <header className="border-b border-[var(--surface-border)] bg-[var(--surface-2)]/90 backdrop-blur-sm">
-      <SectionShell className="py-4">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <Link href="/" className="group inline-flex items-center" aria-label="秋墨首頁">
+    <header className="sticky top-0 z-50 border-b border-[var(--surface-border)] bg-[var(--header-bg)] backdrop-blur-md">
+      <div className="container-shell">
+        <div className="flex h-[76px] items-center justify-between gap-3 md:h-[84px]">
+          <Link
+            href="/"
+            aria-label="秋墨首頁"
+            className="flex shrink-0 items-center"
+          >
             <Image
               src="/assets/branding/logo-main.png"
-              alt="秋墨"
+              alt="秋墨 Akizumi"
               width={192}
               height={90}
-              className="h-[4.5rem] w-auto object-contain transition duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.03] md:h-20"
               priority
+              className="h-[64px] w-auto object-contain md:h-[72px]"
             />
           </Link>
-          <div className="flex w-full flex-wrap items-center gap-2 md:w-auto md:gap-3">
-            <nav className="flex w-full flex-wrap items-center gap-2 text-xs text-[var(--hero-chip-text)] md:w-auto md:justify-center">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="ui-chip"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-            <div className="flex w-full justify-end md:w-auto">
-              <ThemeToggle className="shrink-0" />
-            </div>
+
+          <div className="flex min-w-0 items-center gap-2 md:gap-4">
+            <NavLinks />
+            <ThemeToggle className="shrink-0" />
           </div>
         </div>
-      </SectionShell>
+      </div>
     </header>
   );
 }
