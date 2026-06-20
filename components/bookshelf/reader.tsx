@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import styles from "./reader.module.css";
 
@@ -74,7 +75,7 @@ export function Reader({ body }: ReaderProps) {
       </div>
 
       <article className={articleClassName}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{body}</ReactMarkdown>
       </article>
     </div>
   );

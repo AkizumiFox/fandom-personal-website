@@ -59,45 +59,57 @@
   border: 1px solid var(--surface-border);
   background: color-mix(in srgb, var(--surface-1) 95%, transparent);
   border-radius: var(--radius-panel);
-  padding: 1.25rem;
+  padding: 1.6rem 1.4rem;
   min-height: 70vh;
   overflow: auto;
   box-shadow: 0 8px 20px var(--surface-shadow);
   font-family: var(--font-serif);
+  /* Slightly softened ink for long-form comfort, still high contrast. */
+  color: color-mix(in srgb, var(--foreground) 92%, var(--muted));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 768px) {
+  .article {
+    padding: 2.75rem 3rem;
+  }
 }
 
 .small {
-  font-size: 0.96rem;
+  font-size: 1.02rem;
 }
 
 .medium {
-  font-size: 1.06rem;
+  font-size: 1.14rem;
 }
 
 .large {
-  font-size: 1.2rem;
+  font-size: 1.32rem;
 }
 
 .horizontal {
   writing-mode: horizontal-tb;
-  line-height: 1.5;
+  line-height: 1.95;
+  letter-spacing: 0.015em;
 }
 
 .vertical {
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  letter-spacing: 0.06em;
-  line-height: 1.62;
+  letter-spacing: 0.05em;
+  line-height: 1.95;
   max-height: 78vh;
 }
 
 .article :global(h1),
 .article :global(h2),
 .article :global(h3) {
-  margin-top: 1.2em;
-  margin-bottom: 0.4em;
+  margin-top: 1.4em;
+  margin-bottom: 0.5em;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.4;
+  text-indent: 0;
 }
 
 .article :global(h1) {
@@ -112,26 +124,41 @@
   font-size: 1.2em;
 }
 
+/* Each paragraph: clear 段距 gap + 兩個全形字 first-line indent. */
 .article :global(p) {
-  margin: 0.8em 0;
+  margin: 0 0 1.4em;
+  text-indent: 2em;
 }
 
 .article.vertical :global(p) {
-  margin-block: 1.6em;
+  margin: 0;
+  margin-block: 1.8em;
 }
 
 .article :global(ul),
 .article :global(ol) {
-  margin: 0.8em 0;
-  padding-inline-start: 1.5em;
+  margin: 1em 0;
+  padding-inline-start: 1.6em;
+}
+
+.article :global(li) {
+  margin: 0.3em 0;
+  text-indent: 0;
 }
 
 .article :global(blockquote) {
-  margin: 1em 0;
+  margin: 1.2em 0;
   border-inline-start: 4px solid color-mix(in srgb, var(--accent) 45%, transparent);
   background: color-mix(in srgb, var(--accent) 9%, transparent);
-  padding: 0.55rem 0.85rem;
+  padding: 0.7rem 1rem;
+  border-radius: 0.4rem;
   color: var(--muted);
+  text-indent: 0;
+}
+
+.article :global(blockquote p) {
+  margin: 0.35em 0;
+  text-indent: 0;
 }
 
 .article :global(hr) {

@@ -26,17 +26,19 @@ export default async function BookshelfReaderPage({ params }: BookshelfReaderPag
 
   return (
     <SectionShell className="py-8 md:py-10">
-      <div className="mb-5 flex items-center justify-between gap-3">
-        <Link href="/bookshelf" className="ui-chip text-xs">
-          ← 回到文字創作
-        </Link>
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-5 flex items-center justify-between gap-3">
+          <Link href="/bookshelf" className="ui-chip text-xs">
+            ← 回到文字創作
+          </Link>
+        </div>
+
+        <header className="surface-panel mb-6 rounded-panel px-6 py-5">
+          <h1 className="font-serif text-3xl font-semibold text-foreground md:text-4xl">{entry.title}</h1>
+        </header>
+
+        <Reader body={entry.body} />
       </div>
-
-      <header className="surface-panel mb-6 rounded-panel px-6 py-5">
-        <h1 className="text-3xl font-semibold text-foreground md:text-4xl">{entry.title}</h1>
-      </header>
-
-      <Reader body={entry.body} />
     </SectionShell>
   );
 }

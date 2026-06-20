@@ -76,7 +76,8 @@
 
   --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-  --font-serif: "Songti TC", "Noto Serif TC", Georgia, "Times New Roman", serif;
+  --font-serif: Georgia, "Songti TC", "Source Han Serif TC", "Noto Serif TC",
+    "Times New Roman", serif;
 }
 
 /*
