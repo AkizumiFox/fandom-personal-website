@@ -2,10 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navItems } from "@/content/data/nav";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
-export function NavLinks() {
+type NavLinksProps = {
+  dict: Dictionary;
+};
+
+const navItems = [
+  { key: "fandom", href: "/fandom/gallery" },
+  { key: "bookshelf", href: "/bookshelf" },
+  { key: "hobbies", href: "/hobbies" },
+  { key: "social", href: "/social" },
+  { key: "writing", href: "/writing" }
+] as const;
+
+export function NavLinks({ dict }: NavLinksProps) {
   const pathname = usePathname();
 
   return (
@@ -24,7 +36,7 @@ export function NavLinks() {
                 : "text-muted hover:bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] hover:text-foreground"
             )}
           >
-            {item.label}
+            {dict.nav[item.key]}
           </Link>
         );
       })}

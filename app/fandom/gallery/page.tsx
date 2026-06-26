@@ -4,7 +4,8 @@ import { SectionShell } from "@/components/layout/section-shell";
 import { SectionHeading } from "@/components/typography/section-heading";
 import { GalleryShowcase } from "@/components/fandom/gallery-showcase";
 import { GalleryGrid } from "@/components/fandom/gallery-grid";
-import { fandomCategoryLabels, getFandomGalleryItems, type FandomCategory } from "@/lib/content/fandom";
+import { getFandomGalleryItems, type FandomCategory } from "@/lib/content/fandom";
+import { getServerDictionary } from "@/lib/i18n/server";
 
 type FandomGalleryPageProps = {
   searchParams?: Promise<{
@@ -16,6 +17,7 @@ const categoryOrder: FandomCategory[] = ["commission", "ocs", "fursuit", "sticke
 
 export default async function FandomGalleryPage({ searchParams }: FandomGalleryPageProps) {
   const params = searchParams ? await searchParams : undefined;
+  const { dict } = await getServerDictionary();
   const fandomItems = getFandomGalleryItems();
   const selected = (params?.category ?? "") as FandomCategory | "";
   const activeCategory = categoryOrder.includes(selected as FandomCategory) ? (selected as FandomCategory) : "";
@@ -27,7 +29,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
 
   return (
     <SectionShell>
-      <SectionHeading eyebrow="Gallery" title="圖庫" />
+      <SectionHeading eyebrow="Gallery" title={dict.sections.gallery.title} />
 
       <section className="relative left-1/2 right-1/2 mb-6 w-screen -translate-x-1/2 px-2 md:px-4">
         <div className="flex flex-wrap items-center justify-center gap-2 py-2">
@@ -35,7 +37,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
             href="/fandom/gallery"
             className={`ui-chip text-sm ${activeCategory === "" ? "ui-chip-active text-foreground" : ""}`}
           >
-            全部
+            {dict.common.all}
           </Link>
           {categoryOrder.map((category) => (
             <Link
@@ -43,7 +45,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
               href={`/fandom/gallery?category=${category}`}
               className={`ui-chip text-sm ${activeCategory === category ? "ui-chip-active text-foreground" : ""}`}
             >
-              {fandomCategoryLabels[category]}
+              {dict.fandomCategories[category]}
             </Link>
           ))}
         </div>
@@ -62,7 +64,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
             </div>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
               <p className="text-sm text-muted">
-                這裡是秋墨的 Telegram 貼圖包。繪師：
+                {dict.sections.gallery.stickersIntro}
                 <a
                   href="https://www.instagram.com/dinnerholic/"
                   target="_blank"
@@ -78,7 +80,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
                 rel="noreferrer"
                 className="ui-chip ui-chip-active text-foreground"
               >
-                前往 TG 貼圖
+                {dict.sections.gallery.stickersCta}
               </a>
             </div>
           </div>
@@ -97,7 +99,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
             </div>
             <div className="mt-4 grid gap-2 text-sm text-muted">
               <p>
-                模型：
+                {dict.sections.gallery.modelLabel}
                 <a
                   href="https://dontjinxit.gumroad.com/l/JinxedFox"
                   target="_blank"
@@ -108,7 +110,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
                 </a>
               </p>
               <p>
-                改模：
+                {dict.sections.gallery.remodelLabel}
                 <a
                   href="https://www.facebook.com/DDWoofPT"
                   target="_blank"
@@ -119,7 +121,7 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
                 </a>
               </p>
               <p>
-                上色：
+                {dict.sections.gallery.colorLabel}
                 <a
                   href="https://www.facebook.com/blumewmew"
                   target="_blank"
@@ -132,10 +134,10 @@ export default async function FandomGalleryPage({ searchParams }: FandomGalleryP
             </div>
           </div>
         ) : (
-          <GalleryShowcase items={filteredItems} />
+          <GalleryShowcase items={filteredItems} dict={dict} />
         )}
       </section>
-      {!isStickersTab && !isModelTab ? <GalleryGrid items={filteredItems} /> : null}
+      {!isStickersTab && !isModelTab ? <GalleryGrid items={filteredItems} dict={dict} /> : null}
     </SectionShell>
   );
 }

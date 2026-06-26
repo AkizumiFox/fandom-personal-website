@@ -1,6 +1,7 @@
 import { SectionShell } from "./section-shell";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-export function FoxFooter() {
+export function FoxFooter({ dict }: { dict: Dictionary }) {
   return (
     <footer className="mt-8 border-t border-[var(--surface-border)] bg-[var(--surface-2)]/85">
       <SectionShell className="pb-4 pt-3 md:pb-6">
@@ -13,7 +14,7 @@ export function FoxFooter() {
           />
         </div>
         <p className="mt-2 text-xs tracking-wide text-muted">
-          秋墨 · Akizumi — 黑狐狸的小窩
+          {dict.footer.tagline}
         </p>
       </SectionShell>
     </footer>

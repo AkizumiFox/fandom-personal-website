@@ -3,10 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import type { FandomItem } from "@/lib/content/fandom-shared";
-import { fandomCategoryLabels } from "@/lib/content/fandom-shared";
+import { fmt } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 type GalleryGridProps = {
   items: readonly FandomItem[];
+  dict: Dictionary;
 };
 
 function GalleryImage({ item }: { item: FandomItem }) {
@@ -26,7 +28,7 @@ function GalleryImage({ item }: { item: FandomItem }) {
   );
 }
 
-export function GalleryGrid({ items }: GalleryGridProps) {
+export function GalleryGrid({ items, dict }: GalleryGridProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeItem = useMemo(
     () => (activeIndex === null ? null : items[activeIndex] ?? null),
@@ -57,11 +59,11 @@ export function GalleryGrid({ items }: GalleryGridProps) {
               type="button"
               onClick={() => setActiveIndex(index)}
               className="block w-full overflow-hidden rounded-xl border border-[var(--surface-border)] bg-[var(--surface-2)]"
-              aria-label={`開啟圖片 ${item.title || item.id}`}
+              aria-label={fmt(dict.gallery.openImageAria, { name: item.title || item.id })}
             >
               <GalleryImage item={item} />
             </button>
-            <p className="mt-3 text-xs text-muted">{fandomCategoryLabels[item.category]}</p>
+            <p className="mt-3 text-xs text-muted">{dict.fandomCategories[item.category]}</p>
             {item.title || item.author ? (
               <div className="mt-1 flex items-baseline gap-2 text-left">
                 {item.title ? <h3 className="text-lg font-medium leading-tight">{item.title}</h3> : null}
@@ -100,7 +102,7 @@ export function GalleryGrid({ items }: GalleryGridProps) {
             <div className="flex items-center justify-between rounded-xl border border-[var(--surface-border)] bg-surface2 px-4 py-2 text-sm text-foreground">
               <div className="min-w-0 text-left">
                 <div className="flex items-center gap-2">
-                  <p className="truncate font-medium">{activeItem.title || "未命名作品"}</p>
+                  <p className="truncate font-medium">{activeItem.title || dict.gallery.unnamed}</p>
                   {activeItem.author ? (
                     <p className="truncate text-xs text-muted">
                       —
@@ -120,14 +122,14 @@ export function GalleryGrid({ items }: GalleryGridProps) {
                   ) : null}
                 </div>
                 <p className="truncate text-xs text-muted">
-                  {activeItem.description || "（尚未填寫描述）"}
+                  {activeItem.description || dict.gallery.noDesc}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveIndex(null)}
                 className="grid h-8 w-8 place-items-center rounded-full border border-[var(--surface-border)] transition hover:border-[var(--surface-border-strong)]"
-                aria-label="關閉"
+                aria-label={dict.gallery.closeAria}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-none stroke-current stroke-2">
                   <path d="M6 6L18 18M18 6L6 18" strokeLinecap="round" />

@@ -3,14 +3,16 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import type { FandomItem } from "@/lib/content/fandom-shared";
-import { fandomCategoryLabels } from "@/lib/content/fandom-shared";
+import { fmt } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./gallery-showcase.module.css";
 
 type GalleryShowcaseProps = {
   items: readonly FandomItem[];
+  dict: Dictionary;
 };
 
-export function GalleryShowcase({ items }: GalleryShowcaseProps) {
+export function GalleryShowcase({ items, dict }: GalleryShowcaseProps) {
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const pauseRef = useRef(false);
   const frameRef = useRef<number | null>(null);
@@ -112,7 +114,7 @@ export function GalleryShowcase({ items }: GalleryShowcaseProps) {
               <a
                 href={`#gallery-item-${item.id}`}
                 className={styles.imageButton}
-                aria-label={`定位到圖片 ${item.title || item.id}`}
+                aria-label={fmt(dict.gallery.locateImageAria, { name: item.title || item.id })}
                 draggable={false}
                 onDragStart={(event) => event.preventDefault()}
                 onClick={(event) => {
@@ -138,7 +140,7 @@ export function GalleryShowcase({ items }: GalleryShowcaseProps) {
                 </div>
               </a>
               <div className={styles.overlay}>
-                <span className={styles.category}>{fandomCategoryLabels[item.category]}</span>
+                <span className={styles.category}>{dict.fandomCategories[item.category]}</span>
                 {item.title ? <p className={styles.title}>{item.title}</p> : null}
                 {item.description ? <p className={styles.desc}>{item.description}</p> : null}
               </div>

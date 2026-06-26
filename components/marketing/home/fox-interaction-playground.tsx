@@ -15,6 +15,7 @@ import {
   type FoxHotspotRect,
   type FoxHotspotId
 } from "@/content/data/fox-playground";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./fox-interaction-playground.module.css";
 
 type ParticleBurst = {
@@ -78,7 +79,7 @@ function resolveStageByHotspotCounts(counts: Record<FoxHotspotId, number>): Dial
   return "early";
 }
 
-export function FoxInteractionPlayground() {
+export function FoxInteractionPlayground({ dict }: { dict: Dictionary }) {
   const debugHitboxes = false;
   const idleDelayMs = 30000;
   const [isPlayMode, setIsPlayMode] = useState(false);
@@ -324,8 +325,8 @@ export function FoxInteractionPlayground() {
       <Image
         src="/images/hu-yan-character.png"
         alt="秋墨角色立繪"
-        width={420}
-        height={520}
+        width={480}
+        height={594}
         className={styles.characterImage}
         priority
       />
@@ -334,17 +335,17 @@ export function FoxInteractionPlayground() {
         <button
           type="button"
           className={styles.unlockTapArea}
-          aria-label="連續點擊狐狸三次開啟互動模式"
+          aria-label={dict.fox.unlockAria}
           onClick={(event) => handleUnlockTap(event.timeStamp)}
         />
       ) : null}
 
       <p className={styles.srOnly} id="fox-playground-help">
-        連續點擊狐狸三次可開啟互動模式。開啟後可點擊狐狸身上的熱區觸發對話，並可重置或離開。
+        {dict.fox.help}
       </p>
 
       {isPlayMode ? (
-        <div className={styles.overlay} role="group" aria-label="狐狸互動熱區" aria-describedby="fox-playground-help">
+        <div className={styles.overlay} role="group" aria-label={dict.fox.hotspotsGroupAria} aria-describedby="fox-playground-help">
         {particles.map((burst) => (
           <span
             key={burst.id}
@@ -401,12 +402,12 @@ export function FoxInteractionPlayground() {
       ) : null}
 
       {isPlayMode ? (
-        <div className={styles.controls} role="group" aria-label="互動選單">
+        <div className={styles.controls} role="group" aria-label={dict.fox.hotspotsGroupAria}>
           <button type="button" className="ui-chip" onClick={handleReset}>
-            重置
+            {dict.fox.reset}
           </button>
           <button type="button" className="ui-chip" onClick={handleLeave}>
-            離開
+            {dict.fox.leave}
           </button>
         </div>
       ) : null}

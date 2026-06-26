@@ -5,13 +5,16 @@ import type { FandomCategory, FandomItem } from "@/lib/content/fandom";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { fmt } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 type FandomFacetProps = {
   fandomSelections: { category: string; label: string }[];
   fandomItems: readonly FandomItem[];
+  dict: Dictionary;
 };
 
-export function FandomFacet({ fandomSelections, fandomItems }: FandomFacetProps) {
+export function FandomFacet({ fandomSelections, fandomItems, dict }: FandomFacetProps) {
   const router = useRouter();
   const [featuredIndex, setFeaturedIndex] = useState(0);
 
@@ -30,7 +33,7 @@ export function FandomFacet({ fandomSelections, fandomItems }: FandomFacetProps)
       <p className="section-kicker">GALLERY</p>
       <h2 className="mt-2 text-2xl font-semibold">
         <Link href="/fandom/gallery" className="transition hover:text-accent">
-          獸設 / 獸圖 / 毛裝
+          {dict.nav.fandom}
         </Link>
       </h2>
       <div className="mt-4 flex flex-wrap gap-2">
@@ -50,7 +53,7 @@ export function FandomFacet({ fandomSelections, fandomItems }: FandomFacetProps)
             type="button"
             onClick={() => router.push(`/fandom/gallery?category=${featuredItem.category}`)}
             className="block w-full text-left"
-            aria-label={`前往 ${featuredItem.title || "fandom"} 類別`}
+            aria-label={fmt(dict.facets.gotoCategoryAria, { name: featuredItem.title || "fandom" })}
           >
             <div className="relative h-44 w-full">
               <Image
@@ -63,7 +66,7 @@ export function FandomFacet({ fandomSelections, fandomItems }: FandomFacetProps)
             </div>
             <div className="px-3 pb-1 pt-2">
               <p className="line-clamp-1 text-sm font-medium text-foreground">
-                {featuredItem.title || "隨機展示作品"}
+                {featuredItem.title || dict.facets.fandomRandom}
               </p>
             </div>
           </button>
@@ -82,13 +85,13 @@ export function FandomFacet({ fandomSelections, fandomItems }: FandomFacetProps)
                 <span className="text-xs text-muted">{featuredItem.author}</span>
               )
             ) : (
-              <span className="text-xs text-muted">作者待補</span>
+              <span className="text-xs text-muted">{dict.common.authorTbd}</span>
             )}
           </div>
         </div>
       ) : (
         <div className="mt-4 rounded-lg border border-[var(--surface-border)] bg-[var(--surface-1)] px-3 py-2 text-xs text-muted">
-          尚無可展示作品
+          {dict.common.noWorks}
         </div>
       )}
     </article>

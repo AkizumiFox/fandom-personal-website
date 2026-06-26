@@ -3,15 +3,19 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import { FoxFooter } from "@/components/layout/fox-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { siteConfig } from "@/content/data/site";
+import { localeHtmlLang } from "@/lib/i18n/config";
+import { getServerDictionary } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.title,
-    template: `%s | ${siteConfig.title}`
-  },
-  description: siteConfig.description
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { dict } = await getServerDictionary();
+  return {
+    title: {
+      default: dict.meta.title,
+      template: `%s | ${dict.meta.title}`
+    },
+    description: dict.meta.description
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#12100e"
@@ -24,13 +28,14 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const themeMode = cookieStore.get("theme-mode")?.value === "autumn-light" ? "autumn-light" : "autumn-dark";
+  const { locale, dict } = await getServerDictionary();
 
   return (
-    <html lang="zh-Hant" suppressHydrationWarning data-theme={themeMode}>
+    <html lang={localeHtmlLang[locale]} suppressHydrationWarning data-theme={themeMode}>
       <body>
-        <SiteHeader />
+        <SiteHeader locale={locale} dict={dict} />
         <main>{children}</main>
-        <FoxFooter />
+        <FoxFooter dict={dict} />
       </body>
     </html>
   );

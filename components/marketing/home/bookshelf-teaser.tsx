@@ -1,11 +1,13 @@
 import Link from "next/link";
 import type { BookshelfEntry } from "@/lib/content/bookshelf";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 type BookshelfTeaserProps = {
   books: readonly BookshelfEntry[];
+  dict: Dictionary;
 };
 
-export function BookshelfTeaser({ books }: BookshelfTeaserProps) {
+export function BookshelfTeaser({ books, dict }: BookshelfTeaserProps) {
   const previewBooks = books.slice(-3).reverse();
 
   return (
@@ -13,7 +15,7 @@ export function BookshelfTeaser({ books }: BookshelfTeaserProps) {
       <p className="section-kicker">FICTION</p>
       <h3 className="mt-2 text-2xl font-semibold text-foreground">
         <Link href="/bookshelf" className="transition hover:text-accent">
-          文字創作
+          {dict.nav.bookshelf}
         </Link>
       </h3>
 

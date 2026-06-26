@@ -5,9 +5,11 @@ import { useState, type MouseEvent } from "react";
 type ThemeToggleClientProps = {
   className?: string;
   initialIsDark: boolean;
+  toLightLabel: string;
+  toDarkLabel: string;
 };
 
-export function ThemeToggleClient({ className = "", initialIsDark }: ThemeToggleClientProps) {
+export function ThemeToggleClient({ className = "", initialIsDark, toLightLabel, toDarkLabel }: ThemeToggleClientProps) {
   const [isDark, setIsDark] = useState(initialIsDark);
 
   async function handleClick(event: MouseEvent<HTMLAnchorElement>) {
@@ -56,8 +58,8 @@ export function ThemeToggleClient({ className = "", initialIsDark }: ThemeToggle
         ? "border-[var(--surface-border)] bg-[var(--surface-2)] text-[var(--accent-soft)]"
         : "border-[var(--surface-border)] bg-[var(--surface-2)] text-[var(--brown)]"
       } hover:border-[var(--surface-border-strong)] ${className}`.trim()}
-      aria-label={isDark ? "切換為淺色模式" : "切換為深色模式"}
-      title={isDark ? "切換為淺色模式" : "切換為深色模式"}
+      aria-label={isDark ? toLightLabel : toDarkLabel}
+      title={isDark ? toLightLabel : toDarkLabel}
     >
       {isDark ? (
         <svg

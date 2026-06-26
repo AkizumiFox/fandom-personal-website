@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { HighlightStack, type HighlightItem } from "@/components/marketing/highlight-stack";
 import { FoxInteractionPlayground } from "@/components/marketing/home/fox-interaction-playground";
 import { BusinessCardBack } from "@/components/marketing/home/business-card-back";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./business-card.module.css";
 
 type BusinessCardProps = {
@@ -13,6 +14,7 @@ type BusinessCardProps = {
   facebookHref: string;
   twitterHref: string;
   siteUrl?: string;
+  dict: Dictionary;
 };
 
 const FlipIcon = (
@@ -39,7 +41,7 @@ const CloseIcon = (
   </svg>
 );
 
-export function BusinessCard({ highlights, facebookHref, twitterHref, siteUrl }: BusinessCardProps) {
+export function BusinessCard({ highlights, facebookHref, twitterHref, siteUrl, dict }: BusinessCardProps) {
   const [flipped, setFlipped] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [placeholderHeight, setPlaceholderHeight] = useState<number>();
@@ -82,14 +84,14 @@ export function BusinessCard({ highlights, facebookHref, twitterHref, siteUrl }:
   const card = (
     <section
       className={`${styles.cardShell} surface-panel ${fullscreen ? styles.cardShellFull : ""}`}
-      aria-label="秋墨 電子名片"
+      aria-label={dict.hero.cardAria}
     >
       <div className={styles.controls}>
         <button
           type="button"
           className={`${styles.controlBtn} ${styles.flipBtn}`}
           aria-pressed={flipped}
-          aria-label={flipped ? "翻回正面" : "翻到背面（QR code）"}
+          aria-label={flipped ? dict.card.flipToFront : dict.card.flipToBack}
           onClick={() => setFlipped((value) => !value)}
         >
           {FlipIcon}
@@ -98,7 +100,7 @@ export function BusinessCard({ highlights, facebookHref, twitterHref, siteUrl }:
           ref={closeRef}
           type="button"
           className={styles.controlBtn}
-          aria-label={fullscreen ? "關閉全屏" : "全屏顯示名片"}
+          aria-label={fullscreen ? dict.card.closeFull : dict.card.expand}
           onClick={fullscreen ? closeFullscreen : openFullscreen}
         >
           {fullscreen ? CloseIcon : ExpandIcon}
@@ -111,36 +113,36 @@ export function BusinessCard({ highlights, facebookHref, twitterHref, siteUrl }:
           <div className={`${styles.orb} ${styles.orbB}`} />
           <div className={styles.topLine} />
 
-          <div className="relative z-10 grid items-end gap-8 md:grid-cols-[1fr_auto_1fr]">
-            <div className="space-y-6 pb-4">
-              <div className="space-y-3">
+          <div className={`${styles.heroGrid} relative z-10 grid items-end gap-4`}>
+            <div className={`${styles.heroIdentity} space-y-3 pb-1 md:space-y-6 md:pb-4`}>
+              <div className="space-y-2 md:space-y-3">
                 <p className="section-kicker">AKIZUMI</p>
-                <h1 className="font-serif text-6xl font-black leading-none tracking-tight md:text-7xl">
+                <h1 className="font-serif text-4xl font-black leading-none tracking-tight md:text-6xl lg:text-7xl xl:text-8xl">
                   <span className="text-ink-gradient">秋墨</span>
                 </h1>
-                <p className="text-lg font-medium text-muted">一隻寫小說的黑色狐狸</p>
+                <p className="text-base font-medium text-muted md:text-xl lg:text-2xl">{dict.hero.tagline}</p>
               </div>
-              <p className="max-w-sm text-sm leading-7 text-muted">
-                純文學、極短篇小說寫作者。對於探店、美食有興趣，喜歡在各地探索美食，目標是把全台的米其林必比登吃過一輪。
+              <p className="max-w-sm text-sm leading-6 text-muted md:max-w-md md:text-base md:leading-7 lg:text-lg lg:leading-8">
+                {dict.hero.bio}
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link
                   href="/writing/about-akizumi"
-                  className="inline-flex items-center rounded-full bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-[var(--hero-cta-text)] transition-colors duration-200 hover:bg-[var(--accent-soft)]"
+                  className="inline-flex items-center rounded-full bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-[var(--hero-cta-text)] transition-colors duration-200 hover:bg-[var(--accent-soft)] md:px-6 md:py-2.5 md:text-base"
                 >
-                  自我介紹
+                  {dict.hero.about}
                 </Link>
-                <Link href="/writing/keywords-100" className="ui-chip text-sm">
-                  100 關鍵詞
+                <Link href="/writing/keywords-100" className="ui-chip text-sm md:text-base">
+                  {dict.hero.keywords}
                 </Link>
               </div>
             </div>
 
-            <div className={`${styles.characterWrap} relative mx-auto w-full max-w-[360px]`}>
-              <FoxInteractionPlayground />
+            <div className={`${styles.characterWrap} relative mx-auto w-full max-w-[150px] md:max-w-[320px] lg:max-w-[420px] xl:max-w-[480px]`}>
+              <FoxInteractionPlayground dict={dict} />
             </div>
 
-            <div className={`${styles.rightStack} md:pb-4`}>
+            <div className={`${styles.rightStack} lg:pb-4`}>
               <HighlightStack items={highlights} />
             </div>
           </div>
@@ -153,6 +155,7 @@ export function BusinessCard({ highlights, facebookHref, twitterHref, siteUrl }:
             siteUrl={siteUrl}
             fullscreen={fullscreen}
             onBack={() => setFlipped(false)}
+            dict={dict}
           />
         </div>
       </div>
@@ -168,7 +171,7 @@ export function BusinessCard({ highlights, facebookHref, twitterHref, siteUrl }:
             className={styles.overlay}
             role="dialog"
             aria-modal="true"
-            aria-label="秋墨 電子名片"
+            aria-label={dict.hero.cardAria}
             onClick={(event) => {
               if (event.target === event.currentTarget) closeFullscreen();
             }}

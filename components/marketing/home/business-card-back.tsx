@@ -2,6 +2,8 @@
 
 import QRCode from "qrcode";
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
+import { fmt } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import styles from "./business-card.module.css";
 
 const emptySubscribe = () => () => {};
@@ -28,6 +30,7 @@ type BusinessCardBackProps = {
   siteUrl?: string;
   fullscreen?: boolean;
   onBack: () => void;
+  dict: Dictionary;
 };
 
 const ScanIcon = (
@@ -52,7 +55,7 @@ const XIcon = (
   </svg>
 );
 
-function QrTile({ label, caption, href, icon, featured }: Omit<QrTarget, "id"> & { featured?: boolean }) {
+function QrTile({ label, caption, href, icon, featured, scanAria }: Omit<QrTarget, "id"> & { featured?: boolean; scanAria: string }) {
   const [svg, setSvg] = useState("");
 
   useEffect(() => {
@@ -81,7 +84,7 @@ function QrTile({ label, caption, href, icon, featured }: Omit<QrTarget, "id"> &
       target="_blank"
       rel="noreferrer"
       className={`${styles.qrTile} ${featured ? styles.qrTileFeatured : ""}`}
-      aria-label={`${label}：${caption}`}
+      aria-label={fmt(scanAria, { label, caption })}
     >
       <span
         className={`${styles.qrCode} ${featured ? styles.qrCodeFeatured : ""}`}
@@ -97,13 +100,14 @@ function QrTile({ label, caption, href, icon, featured }: Omit<QrTarget, "id"> &
   );
 }
 
-export function BusinessCardBack({ facebookHref, twitterHref, siteUrl, fullscreen, onBack }: BusinessCardBackProps) {
+export function BusinessCardBack({ facebookHref, twitterHref, siteUrl, fullscreen, onBack, dict }: BusinessCardBackProps) {
   const isClient = useIsClient();
   const resolvedSite = siteUrl ?? (isClient ? window.location.origin : "");
+  const scanAria = dict.card.scanAria;
 
   const site: Omit<QrTarget, "id"> = {
-    label: "掃我，收下名片",
-    caption: "認親 · 加好友",
+    label: dict.card.siteLabel,
+    caption: dict.card.siteCaption,
     href: resolvedSite,
     icon: ScanIcon
   };
@@ -124,33 +128,33 @@ export function BusinessCardBack({ facebookHref, twitterHref, siteUrl, fullscree
     <div className={styles.backInner}>
       <div className={styles.backHeader}>
         <p className="section-kicker">AKIZUMI</p>
-        <p className={styles.backTitle}>秋墨 · 電子名片</p>
-        <p className={styles.backHint}>掃描 QR code，把這張名片帶走，或單獨追蹤。</p>
+        <p className={styles.backTitle}>{dict.card.title}</p>
+        <p className={styles.backHint}>{dict.card.hint}</p>
       </div>
 
       {fullscreen ? (
         <>
           <div className={styles.masterRow}>
-            <QrTile featured {...site} />
+            <QrTile featured scanAria={scanAria} {...site} />
           </div>
           <div className={styles.followDivider}>
-            <span>或單獨追蹤</span>
+            <span>{dict.card.followOnly}</span>
           </div>
           <div className={styles.qrGrid}>
-            <QrTile {...facebook} />
-            <QrTile {...twitter} />
+            <QrTile scanAria={scanAria} {...facebook} />
+            <QrTile scanAria={scanAria} {...twitter} />
           </div>
         </>
       ) : (
         <div className={styles.qrGrid}>
-          <QrTile {...facebook} />
-          <QrTile {...site} />
-          <QrTile {...twitter} />
+          <QrTile scanAria={scanAria} {...facebook} />
+          <QrTile scanAria={scanAria} {...site} />
+          <QrTile scanAria={scanAria} {...twitter} />
         </div>
       )}
 
       <button type="button" onClick={onBack} className={styles.backFlip}>
-        翻回正面
+        {dict.card.backToFront}
       </button>
     </div>
   );

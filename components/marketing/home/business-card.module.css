@@ -42,7 +42,7 @@
   position: relative;
   z-index: 2;
   overflow: visible;
-  padding: 1.5rem 1.5rem 2rem;
+  padding: 1.25rem;
 }
 
 .back {
@@ -111,9 +111,243 @@
   gap: 0.9rem;
 }
 
+/* Hero grid responsive layouts.
+   Base (portrait phone): single stacked column. */
+.heroGrid {
+  grid-template-columns: 1fr;
+}
+
+/* Tablet / narrow window: identity + fox on one row, highlights as a
+   full-width row below (avoids the cramped 3-column at mid widths). */
 @media (min-width: 768px) {
-  .rightStack {
+  .heroGrid {
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .heroGrid .rightStack {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Large desktop: the signature 3-column hero (identity | big fox | highlights).
+   Gated at xl (1280) because the 360px fox leaves the side columns too cramped
+   below this width - narrower screens use the clean two-row layout above. */
+@media (min-width: 1280px) {
+  .heroGrid {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+  }
+
+  .heroGrid .rightStack {
+    grid-column: auto;
     transform: translateY(-24px);
+  }
+}
+
+/* Phone landscape (wide but short): compact identity | fox that fits the
+   short height; highlights are hidden. Placed after the width queries so it
+   wins when a landscape phone also matches min-width: 768px. */
+@media (orientation: landscape) and (max-height: 600px) {
+  .heroGrid {
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  /* Fullscreen front stays clean (no highlights); the inline card keeps a
+     condensed highlights row beneath the identity + fox. */
+  .cardShellFull .heroGrid .rightStack {
+    display: none;
+  }
+
+  /* Inline short landscape: identity stacked above the condensed chips on the
+     left (chips sit right under the identity, not floating in the centre), with
+     the fox filling the height on the right. align-self end/start keeps the
+     identity and chips adjacent even when the fox is the tallest element. */
+  .cardShell:not(.cardShellFull) .heroGrid {
+    grid-template-areas:
+      "identity fox"
+      "chips    fox";
+    column-gap: 1.5rem;
+    row-gap: 0.7rem;
+  }
+
+  .cardShell:not(.cardShellFull) .heroIdentity {
+    grid-area: identity;
+    align-self: end;
+  }
+
+  .cardShell:not(.cardShellFull) .heroGrid .rightStack {
+    grid-area: chips;
+    align-self: start;
+    justify-self: start;
+  }
+
+  /* Inline landscape fox: bigger than the old 132px cap, scaled to the short
+     height so it still fits. (Fullscreen has its own larger override below.) */
+  .cardShell:not(.cardShellFull) .heroGrid .characterWrap {
+    grid-area: fox;
+    align-self: center;
+    max-width: min(300px, 42vh);
+  }
+
+  .heroIdentity h1 {
+    font-size: 2.25rem;
+  }
+
+  .heroIdentity > * + * {
+    margin-top: 0.6rem;
+  }
+
+  /* Inline short landscape: drop the long bio so the identity + condensed
+     highlights row both fit the short height. */
+  .cardShell:not(.cardShellFull) .heroIdentity > p {
+    display: none;
+  }
+
+  .cardShell:not(.cardShellFull) .heroIdentity > * + * {
+    margin-top: 0.45rem;
+  }
+
+  .cardShell:not(.cardShellFull) .front {
+    padding-bottom: 0.6rem;
+  }
+
+  .front {
+    padding: 1rem 1.5rem;
+  }
+
+  .cardShellFull .face {
+    justify-content: center;
+  }
+
+  /* Fullscreen landscape has a whole screen to fill, so let the fox and title
+     grow large (the 132px cap above is only for the compact inline card). */
+  .cardShellFull .heroGrid {
+    gap: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .cardShellFull .heroGrid .characterWrap {
+    max-width: min(480px, 70vh);
+  }
+
+  .cardShellFull .heroIdentity h1 {
+    font-size: clamp(2.75rem, 11vh, 5rem);
+  }
+
+  .cardShellFull .heroIdentity p {
+    font-size: clamp(1rem, 3.4vh, 1.35rem);
+  }
+
+  /* Fullscreen back in landscape: compact so the master + follow QR codes fit
+     the short height without scrolling. */
+  .cardShellFull .back {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .cardShellFull .backInner {
+    gap: 0.45rem;
+  }
+
+  .cardShellFull .backHeader {
+    gap: 0.05rem;
+  }
+
+  .cardShellFull .backTitle {
+    font-size: 1.05rem;
+  }
+
+  .cardShellFull .backHint,
+  .cardShellFull .followDivider {
+    display: none;
+  }
+
+  .cardShellFull .qrTileFeatured {
+    gap: 0.35rem;
+  }
+
+  .cardShellFull .qrTile {
+    gap: 0.3rem;
+  }
+
+  .cardShellFull .backInner {
+    max-width: 360px;
+  }
+
+  .cardShellFull .backHeader {
+    align-items: center;
+    text-align: center;
+  }
+
+  .cardShellFull .qrCodeFeatured {
+    height: min(96px, 24vh);
+  }
+
+  .cardShellFull .qrGrid {
+    gap: 0.75rem 1.25rem;
+  }
+
+  .cardShellFull .qrCode {
+    height: min(78px, 18vh);
+  }
+
+  .cardShellFull .backFlip {
+    padding: 0.1rem 0.5rem;
+  }
+
+  /* Inline (non-fullscreen) back in landscape: the back fills the compact front
+     box, so shrink the 3 QR codes into one tidy row that fits without clipping. */
+  .cardShell:not(.cardShellFull) .back {
+    padding: 0.85rem 1.5rem;
+  }
+
+  .cardShell:not(.cardShellFull) .backInner {
+    gap: 0.5rem;
+  }
+
+  .cardShell:not(.cardShellFull) .backHeader {
+    gap: 0.05rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cardShell:not(.cardShellFull) .backTitle {
+    font-size: 1.05rem;
+  }
+
+  .cardShell:not(.cardShellFull) .backHint {
+    font-size: 0.72rem;
+  }
+
+  .cardShell:not(.cardShellFull) .qrGrid {
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  .cardShell:not(.cardShellFull) .qrGrid > * {
+    min-width: 0;
+  }
+
+  .cardShell:not(.cardShellFull) .qrCode {
+    width: auto;
+    height: min(118px, 30vh);
+    max-width: 100%;
+  }
+
+  .cardShell:not(.cardShellFull) .qrLabel {
+    font-size: 0.72rem;
+  }
+
+  .cardShell:not(.cardShellFull) .qrCaption {
+    font-size: 0.62rem;
+  }
+
+  .cardShell:not(.cardShellFull) .backFlip {
+    padding: 0.1rem 0.5rem;
   }
 }
 
@@ -321,6 +555,47 @@
   color: var(--foreground);
 }
 
+/* Inline back on mobile: keep the 3 QR codes in one compact row so the back
+   fits inside the condensed front box without scrolling or clipping. */
+@media (max-width: 767px) {
+  .cardShell:not(.cardShellFull) .backInner {
+    gap: 0.85rem;
+  }
+
+  .cardShell:not(.cardShellFull) .backHeader {
+    gap: 0.15rem;
+  }
+
+  .cardShell:not(.cardShellFull) .backTitle {
+    font-size: 1.15rem;
+  }
+
+  .cardShell:not(.cardShellFull) .backHint {
+    font-size: 0.78rem;
+  }
+
+  .cardShell:not(.cardShellFull) .qrGrid {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .cardShell:not(.cardShellFull) .qrGrid > * {
+    min-width: 0;
+  }
+
+  .cardShell:not(.cardShellFull) .qrCode {
+    max-width: 86px;
+  }
+
+  .cardShell:not(.cardShellFull) .qrLabel {
+    font-size: 0.72rem;
+  }
+
+  .cardShell:not(.cardShellFull) .qrCaption {
+    font-size: 0.62rem;
+  }
+}
+
 /* Fullscreen — edge-to-edge, not a floating window */
 .overlay {
   position: fixed;
@@ -364,8 +639,25 @@
 
 /* Fullscreen: size QR codes against viewport height so the back fits without
    ever scrolling, while staying capped on tall screens. */
+/* Keep the fullscreen back grouped in a centred column instead of letting the
+   QR codes drift to the screen edges on wide viewports. */
 .cardShellFull .backInner {
   gap: clamp(0.6rem, 2vh, 1.15rem);
+  width: 100%;
+  max-width: 460px;
+  margin-inline: auto;
+}
+
+/* Group the two follow QR codes together in the centre rather than letting
+   them stretch to opposite sides of the back. */
+.cardShellFull .qrGrid {
+  gap: 1rem 1.75rem;
+}
+
+.cardShellFull .qrGrid > * {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: none;
 }
 
 .cardShellFull .qrCodeFeatured {

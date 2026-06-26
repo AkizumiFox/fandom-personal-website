@@ -2,16 +2,18 @@ import Link from "next/link";
 import { SectionShell } from "@/components/layout/section-shell";
 import { SectionHeading } from "@/components/typography/section-heading";
 import { getBookshelfEntries } from "@/lib/content/bookshelf";
+import { getServerDictionary } from "@/lib/i18n/server";
 
-export default function BookshelfPage() {
+export default async function BookshelfPage() {
   const books = [...getBookshelfEntries()].reverse();
+  const { dict } = await getServerDictionary();
 
   return (
     <SectionShell>
-      <SectionHeading eyebrow="Fiction" title="文字創作" description="寫完的小說都收在這裡。" />
+      <SectionHeading eyebrow="Fiction" title={dict.sections.bookshelf.title} description={dict.sections.bookshelf.description} />
 
       {books.length === 0 ? (
-        <p className="text-muted">目前還沒有作品，請先在 `content/collections/bookshelf/` 新增 .md 檔案。</p>
+        <p className="text-muted">{dict.sections.bookshelf.empty}</p>
       ) : (
         <div className="grid gap-4">
           {books.map((book) => (

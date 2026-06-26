@@ -6,6 +6,7 @@ import { SectionShell } from "@/components/layout/section-shell";
 import { Prose } from "@/components/typography/prose";
 import { ReadingProgress } from "@/components/typography/reading-progress";
 import { getWritingEntries, getWritingEntryBySlug } from "@/lib/content/writing";
+import { getServerDictionary } from "@/lib/i18n/server";
 
 type WritingDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -19,8 +20,9 @@ export function generateStaticParams() {
 
 export default async function WritingDetailPage({ params }: WritingDetailPageProps) {
   const { slug } = await params;
-  const entries = getWritingEntries();
-  const entry = getWritingEntryBySlug(slug);
+  const { dict, locale } = await getServerDictionary();
+  const entries = getWritingEntries(locale);
+  const entry = getWritingEntryBySlug(slug, locale);
 
   if (!entry) {
     notFound();
@@ -38,7 +40,7 @@ export default async function WritingDetailPage({ params }: WritingDetailPagePro
       <ReadingProgress />
       <article className="surface-panel mx-auto mt-6 max-w-4xl rounded-panel px-6 pb-8 pt-6 md:px-10">
         <h1 className="font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{entry.title}</h1>
-        <p className="mt-2 text-sm leading-7 text-muted">{entry.excerpt ?? "更新中"}</p>
+        <p className="mt-2 text-sm leading-7 text-muted">{entry.excerpt ?? dict.common.updating}</p>
         <div className="mt-4 flex flex-wrap gap-2">
           {entry.tags.map((tag) => (
             <span key={tag} className="ui-chip px-2 py-0.5 text-xs">
@@ -53,17 +55,17 @@ export default async function WritingDetailPage({ params }: WritingDetailPagePro
           </ReactMarkdown>
         </Prose>
 
-        <nav aria-label="文章導覽" className="mt-8 grid gap-3 border-t border-[var(--surface-border)] pt-5 md:grid-cols-2">
+        <nav aria-label={dict.articleNav.label} className="mt-8 grid gap-3 border-t border-[var(--surface-border)] pt-5 md:grid-cols-2">
           {prevEntry ? (
             <Link
               href={`/writing/${prevEntry.slug}`}
               className="surface-card block rounded-card p-4"
             >
-              <p className="text-xs text-muted">← 前一篇</p>
+              <p className="text-xs text-muted">{dict.articleNav.prev}</p>
               <p className="mt-1 line-clamp-1 text-sm font-medium text-foreground">{prevEntry.title}</p>
             </Link>
           ) : (
-            <div className="rounded-card border border-dashed border-[var(--surface-border)] p-4 text-xs text-muted">已經是第一篇</div>
+            <div className="rounded-card border border-dashed border-[var(--surface-border)] p-4 text-xs text-muted">{dict.articleNav.first}</div>
           )}
 
           {nextEntry ? (
@@ -71,11 +73,11 @@ export default async function WritingDetailPage({ params }: WritingDetailPagePro
               href={`/writing/${nextEntry.slug}`}
               className="surface-card block rounded-card p-4 text-right"
             >
-              <p className="text-xs text-muted">後一篇 →</p>
+              <p className="text-xs text-muted">{dict.articleNav.next}</p>
               <p className="mt-1 line-clamp-1 text-sm font-medium text-foreground">{nextEntry.title}</p>
             </Link>
           ) : (
-            <div className="rounded-card border border-dashed border-[var(--surface-border)] p-4 text-right text-xs text-muted">已經是最後一篇</div>
+            <div className="rounded-card border border-dashed border-[var(--surface-border)] p-4 text-right text-xs text-muted">{dict.articleNav.last}</div>
           )}
         </nav>
       </article>

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Reader } from "@/components/bookshelf/reader";
 import { SectionShell } from "@/components/layout/section-shell";
 import { getBookshelfEntries, getBookshelfEntryBySlug } from "@/lib/content/bookshelf";
+import { getServerDictionary } from "@/lib/i18n/server";
 
 type BookshelfReaderPageProps = {
   params: Promise<{
@@ -18,6 +19,7 @@ export function generateStaticParams() {
 
 export default async function BookshelfReaderPage({ params }: BookshelfReaderPageProps) {
   const { slug } = await params;
+  const { dict } = await getServerDictionary();
   const entry = getBookshelfEntryBySlug(slug);
 
   if (!entry) {
@@ -29,7 +31,7 @@ export default async function BookshelfReaderPage({ params }: BookshelfReaderPag
       <div className="mx-auto max-w-5xl">
         <div className="mb-5 flex items-center justify-between gap-3">
           <Link href="/bookshelf" className="ui-chip text-xs">
-            ← 回到文字創作
+            {dict.bookshelfReader.back}
           </Link>
         </div>
 
@@ -37,7 +39,7 @@ export default async function BookshelfReaderPage({ params }: BookshelfReaderPag
           <h1 className="font-serif text-3xl font-semibold text-foreground md:text-4xl">{entry.title}</h1>
         </header>
 
-        <Reader body={entry.body} />
+        <Reader body={entry.body} dict={dict} />
       </div>
     </SectionShell>
   );
