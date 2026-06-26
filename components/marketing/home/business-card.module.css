@@ -1,0 +1,458 @@
+.cardShell {
+  position: relative;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  perspective: 1800px;
+  box-shadow: 0 24px 60px var(--surface-shadow);
+  animation: card-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Flip mechanism */
+.flip {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Inline mode: the front (kept in flow) sets the card size; the back fills the
+   exact same box so flipping keeps an identical footprint to the front. */
+.cardShell:not(.cardShellFull) .flip {
+  position: relative;
+}
+
+.cardShell:not(.cardShellFull) .back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.flip[data-flipped="true"] {
+  transform: rotateY(180deg);
+}
+
+.face {
+  grid-area: 1 / 1;
+  border-radius: inherit;
+  background: var(--surface-2, var(--background));
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.front {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  padding: 1.5rem 1.5rem 2rem;
+}
+
+.back {
+  position: relative;
+  z-index: 1;
+  transform: rotateY(180deg);
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .front {
+    padding: 1.5rem 2.5rem 2rem;
+  }
+
+  .back {
+    padding: 2rem 2.5rem;
+  }
+}
+
+/* Front decorations (moved from page.module.css) */
+.topLine {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 50%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(48px);
+  pointer-events: none;
+  animation: orb-drift 8.4s ease-in-out infinite;
+}
+
+.orbA {
+  left: -6rem;
+  top: -4rem;
+  height: 18rem;
+  width: 18rem;
+  background: var(--hero-orb-a);
+}
+
+.orbB {
+  right: -2.5rem;
+  bottom: -3rem;
+  height: 15rem;
+  width: 15rem;
+  background: var(--hero-orb-b);
+  animation-delay: -3s;
+}
+
+.characterWrap {
+  animation: float-y 5.6s ease-in-out infinite;
+}
+
+.rightStack {
+  display: grid;
+  gap: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .rightStack {
+    transform: translateY(-24px);
+  }
+}
+
+/* Corner controls */
+.controls {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 30;
+  display: flex;
+  gap: 0.15rem;
+}
+
+.controlBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  opacity: 0.32;
+  transition:
+    color var(--motion-fast, 150ms) ease,
+    opacity var(--motion-fast, 150ms) ease;
+}
+
+.controlBtn:hover,
+.controlBtn:focus-visible {
+  opacity: 1;
+  color: var(--foreground);
+}
+
+.controlBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Flip control stays especially discreet until the card is hovered/focused */
+.flipBtn {
+  opacity: 0.12;
+}
+
+.cardShell:hover .flipBtn,
+.flipBtn:hover,
+.flipBtn:focus-visible {
+  opacity: 1;
+}
+
+/* Back face layout */
+.backInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  min-height: 100%;
+}
+
+.backHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.backTitle {
+  font-family: var(--font-serif, serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.backHint {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.masterRow {
+  display: flex;
+  justify-content: center;
+}
+
+.qrTileFeatured {
+  gap: 0.8rem;
+}
+
+.qrCodeFeatured {
+  max-width: 224px;
+}
+
+.qrTileFeatured .qrLabel {
+  font-size: 1rem;
+}
+
+.followDivider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.followDivider::before,
+.followDivider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--surface-border-strong, var(--accent)) 60%, transparent);
+}
+
+.qrGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem 2rem;
+}
+
+.qrGrid > * {
+  flex: 1 1 0;
+  min-width: 120px;
+  max-width: 200px;
+}
+
+.qrTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.65rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.qrCode {
+  display: block;
+  width: 100%;
+  max-width: 188px;
+  aspect-ratio: 1;
+  color: var(--foreground);
+  transition: transform var(--motion-fast, 150ms) ease;
+}
+
+.qrTile:hover .qrCode {
+  transform: scale(1.015);
+}
+
+.qrCode :global(svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.qrMeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.qrIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.qrLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--foreground);
+}
+
+.qrCaption {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.backFlip {
+  align-self: center;
+  border: 0;
+  background: transparent;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  opacity: 0.55;
+  transition: opacity var(--motion-fast, 150ms) ease, color var(--motion-fast, 150ms) ease;
+}
+
+.backFlip:hover,
+.backFlip:focus-visible {
+  opacity: 1;
+  color: var(--foreground);
+}
+
+/* Fullscreen — edge-to-edge, not a floating window */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  overflow: hidden;
+  background: var(--surface-2, var(--background));
+  animation: overlay-in 200ms ease both;
+}
+
+.overlayInner {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+}
+
+.cardShellFull {
+  width: 100%;
+  min-height: 100dvh;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+}
+
+.cardShellFull .flip {
+  min-height: 100dvh;
+}
+
+.cardShellFull .face {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100dvh;
+}
+
+.cardShellFull .back {
+  padding: max(1.5rem, env(safe-area-inset-top)) 1.5rem max(1.5rem, env(safe-area-inset-bottom));
+  overflow: hidden;
+}
+
+/* Fullscreen: size QR codes against viewport height so the back fits without
+   ever scrolling, while staying capped on tall screens. */
+.cardShellFull .backInner {
+  gap: clamp(0.6rem, 2vh, 1.15rem);
+}
+
+.cardShellFull .qrCodeFeatured {
+  width: auto;
+  height: min(208px, 26vh);
+  max-width: 80vw;
+}
+
+.cardShellFull .qrCode {
+  width: auto;
+  height: min(168px, 17vh);
+  max-width: 80vw;
+}
+
+/* Animations */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8px, -6px, 0) scale(1.04);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: crossfade instead of 3D rotate */
+@media (prefers-reduced-motion: reduce) {
+  .cardShell,
+  .orb,
+  .characterWrap {
+    animation: none !important;
+  }
+
+  .flip {
+    transform: none !important;
+    transform-style: flat;
+    transition: none;
+  }
+
+  .face {
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transition: opacity 180ms ease;
+  }
+
+  .back {
+    transform: none;
+    opacity: 0;
+  }
+
+  .flip[data-flipped="true"] .front {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .flip[data-flipped="true"] .back {
+    opacity: 1;
+    z-index: 2;
+  }
+}
